@@ -1,18 +1,34 @@
-bool Solution::hotel(vector<int> &arrive, vector<int> &depart, int K) 
-{
-    sort(arrive.begin(),arrive.end());
-    sort(depart.begin(),depart.end());
-    int i=1,j=0,c=1;
-    while(i<arrive.size()){
-        if(arrive[i]>=depart[j]){
+class Solution {
+public:
+    bool isValid(string s) 
+    {
+        stack<char> st;
+        int n=s.size(),i=0;
+        while(i<n)
+        {
+            if( ( s[i]=='(' ) || ( s[i]=='[' ) || ( s[i]=='{' ) )
+            { st.push(s[i]); }
+             else if (!st.empty())
+            {
+                if (s[i] == '}' or s[i] == ']' or s[i] == ')')
+                {
+                    if ((s[i] == '}' && st.top() == '{') || (s[i] == ')' && st.top() == '(') || (s[i] == ']' && st.top() == '['))
+                    {
+                        st.pop();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if(st.empty())
+            {
+                st.push(s[i]);
+            }
             i++;
-            j++;
         }
-        else{
-            i++;
-            c++;
-        }
+        if(!st.empty())return false;
+        return true;
     }
-    if(c>K)return false;
-return true;
-}
+};
